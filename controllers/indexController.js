@@ -16,6 +16,16 @@ const shopFun = async (req, res) => {
   }
 };
 
+const cart = async (req, res) => {
+  try {
+    const {email} = req.user
+    let user = await userModel.findOne({email}).populate("cart")
+    res.render("cart", {user})
+  } catch (err) {
+    console.log(err.meassage);
+  }
+};
+
 const addToCart=async(req,res)=>{
   try{
     let user = await userModel.findOne({email : req.user.email})
@@ -29,4 +39,4 @@ const addToCart=async(req,res)=>{
   }
 }
 
-module.exports = { indexFun, shopFun, addToCart };
+module.exports = { indexFun, shopFun, cart, addToCart };
